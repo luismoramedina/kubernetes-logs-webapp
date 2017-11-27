@@ -3,42 +3,18 @@ package main
 import (
    "io/ioutil"
    "github.com/go-errors/errors"
-   "github.com/jhoonb/archivex"
    "github.com/Jeffail/gabs"
    "crypto/tls"
    "fmt"
    "strings"
    "net/http"
    "net/url"
-   "sync"
 )
 
 var namespace = "isb-npccd-dev"
 
 func init() {
    //TODO create client
-}
-
-func getAll() {
-   zip := new(archivex.ZipFile)
-   zip.Create("logs")
-   pods := GetPods()
-
-   var waitGroup sync.WaitGroup
-   waitGroup.Add(len(pods))
-
-   for _, pod := range pods {
-      go func(pod string) {
-         defer waitGroup.Done()
-         fmt.Println(pod)
-         logs := getLogs(pod)
-         zip.Add(pod + ".txt" , []byte(logs))
-      }(pod)
-
-   }
-   waitGroup.Wait()
-   zip.Close()
-
 }
 
 func getLogs(podName string) string {
