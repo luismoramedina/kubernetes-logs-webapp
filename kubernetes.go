@@ -19,10 +19,10 @@ func init() {
    //TODO create client
 }
 
-func main() {
+func getAll() {
    zip := new(archivex.ZipFile)
    zip.Create("logs")
-   pods := getPods()
+   pods := GetPods()
 
    var waitGroup sync.WaitGroup
    waitGroup.Add(len(pods))
@@ -68,7 +68,7 @@ func getLogs(podName string) string {
    return logString
 
 }
-func getPods() []string {
+func GetPods() []string {
 
    client := getClient()
 

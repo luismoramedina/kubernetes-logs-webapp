@@ -12,7 +12,7 @@ func main() {
 
 func listLogs(response http.ResponseWriter, r *http.Request) {
 
-	pods := []string{"one", "two"}
+	pods := GetPods()
 
 	var templates = template.Must(template.ParseFiles("main.html"))
 	templates.ExecuteTemplate(response, "main", &pods)
