@@ -9,11 +9,20 @@ import (
    "strings"
    "net/http"
    "net/url"
+   "os"
 )
 
-var namespace = "isb-npccd-dev"
+var namespace = os.Getenv("NAMESPACE")
+var token = os.Getenv("TOKEN")
+var kApi = os.Getenv("K8SAPI")
 
 func init() {
+   if len(token) == 0 {
+      fmt.Println("ERROR no TOKEN env")
+   }
+   if len(namespace) == 0 {
+      fmt.Println("ERROR no NAMESPACE env")
+   }
    //TODO create client
 }
 
@@ -81,10 +90,14 @@ func GetPods() []string {
    return pods
 }
 func addAuthorization(req *http.Request) {
-   req.Header.Add("Authorization", "Bearer 425BGrYBfjR8Bud7gpfiIPO9YPoOUoSDaMVcWmylyyk")
+   req.Header.Add("Authorization", "Bearer " + token)
 }
 func getUrl(query string, namespace string, podname string) *url.URL {
    apiUri := "https://kubernetes.default.svc"
+   if len(kApi) > 0 {
+      apiUri = kApi
+   }
+
    uriString := apiUri + query
    uriString = strings.Replace(uriString,"$NAMESPACE", namespace, -1)
    uriString = strings.Replace(uriString,"$PODNAME", podname, -1)

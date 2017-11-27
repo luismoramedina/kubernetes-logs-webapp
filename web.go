@@ -12,7 +12,9 @@ import (
 func main() {
 	http.HandleFunc("/", listLogs)
 	http.HandleFunc("/download", download)
-	http.ListenAndServe(":8080", nil)
+	port := ":8080"
+	fmt.Println("Listening on " + port)
+	http.ListenAndServe(port, nil)
 }
 
 func listLogs(response http.ResponseWriter, request *http.Request) {
