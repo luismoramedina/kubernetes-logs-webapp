@@ -1,6 +1,9 @@
 package main
 
-import "net/http"
+import (
+	"net/http"
+	"html/template"
+)
 
 func main() {
 	http.HandleFunc("/", listLogs)
@@ -8,7 +11,11 @@ func main() {
 }
 
 func listLogs(response http.ResponseWriter, r *http.Request) {
-	response.Write([]byte("hello"))
+
+	pods := []string{"one", "two"}
+
+	var templates = template.Must(template.ParseFiles("main.html"))
+	templates.ExecuteTemplate(response, "main", &pods)
 }
 
 

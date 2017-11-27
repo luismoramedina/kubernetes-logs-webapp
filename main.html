@@ -1,0 +1,24 @@
+{{define "main"}}
+<html>
+<head><title>hello</title></head>
+<body>
+<div>
+    <form action="download">
+        <table>
+        {{range .}}
+            <tr>
+                <td>{{.}}</td>
+                <td>
+                    <input type="checkbox" name="{{.}}" value="true"/>
+                </td>
+            </tr>
+        {{end}}
+        </table>
+        <input type="text" title="filter" name="filter"/><br/>
+        <button type="submit" title="Download" value="Download">Download</button>
+        <button type="button" title="View" value="View">View</button>
+    </form>
+</div>
+</body>
+</html>
+{{end}}
