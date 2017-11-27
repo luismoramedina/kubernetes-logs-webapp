@@ -1,0 +1,27 @@
+= kubernetes-logs-webapp
+webapp to get kubernetes logs
+
+== Build
+
+---
+go build -o klogs *.go
+---
+
+== Run
+
+== Docker
+
+---
+docker build -t klogs:$version .
+docker tag klogs:$version registry.boae.paas.gsnetcloud.corp/$user/klogs:$version
+docker push $registry/$user/klogs:$version
+---
+
+== Openshift
+
+---
+
+---
+
+
+
