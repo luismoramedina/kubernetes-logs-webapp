@@ -10,6 +10,7 @@ import (
    "strings"
    "net/http"
    "net/url"
+   "sync"
 )
 
 var namespace = "isb-npccd-dev"
@@ -21,13 +22,21 @@ func init() {
 func main() {
    zip := new(archivex.ZipFile)
    zip.Create("logs")
-   x := getPods()
-   //fmt.Println(x)
-   for _, pod := range x {
-      fmt.Println(pod)
-      logs := getLogs(pod)
-      zip.Add(pod + ".txt" , []byte(logs))
+   pods := getPods()
+
+   var waitGroup sync.WaitGroup
+   waitGroup.Add(len(pods))
+
+   for _, pod := range pods {
+      go func(pod string) {
+         defer waitGroup.Done()
+         fmt.Println(pod)
+         logs := getLogs(pod)
+         zip.Add(pod + ".txt" , []byte(logs))
+      }(pod)
+
    }
+   waitGroup.Wait()
    zip.Close()
 
 }
